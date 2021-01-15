@@ -27,33 +27,33 @@
   </nav>
   <div class="section" id="form">
     <div class="center">
-      <h4>{{leaderMessage}}</h4>
+      <h4>{{leader_message}}</h4>
     </div>
     <div class="row center">
       <div class="col s6 m5 offset-m1">
-        <div class="{{ternary leadTeam 'CATS' 'card-panel teal lighten-4' 'card-panel'}}">
+        <div class="{% if lead_team == 'CATS' %}card-panel teal lighten-4{% else %}card-panel{% endif %}"">
           <i class="material-icons large">🐱</i>
-          <h3>{{catsCount}} votes</h3>
+          <h3>{{cats_count}} votes</h3>
           <button class="btn" id="voteCats">Vote for CATS</button>
         </div>
       </div>
       <div class="col s6 m5">
-        <div class="{{ternary leadTeam 'DOGS' 'card-panel teal lighten-4' 'card-panel'}}">
+        <div class="{% if lead_team == 'DOGS' %}card-panel teal lighten-4{% else %}card-panel{% endif %}"">
           <i class="material-icons large">🐶</i>
-          <h3>{{dogsCount}} votes</h3>
+          <h3>{{dogs_count}} votes</h3>
           <button class="btn" id="voteDogs">Vote for DOGS</button>
         </div>
       </div>
     </div>
     <h4 class="header center">Recent Votes</h4>
     <ul class="container collection center" >
-      {{#each votes}}
+      {% for vote in recent_votes %}
       <li class="collection-item avatar">
-        <i class="material-icons circle teal lighten-1">{{ternary this.candidate 'CATS' '🐱' '🐶'}}</i>
-        <span class="title">A vote for </span><b>{{this.candidate}}</b>
-        <p>was cast at {{this.time_cast}}</p>
+        <i class="material-icons circle teal lighten-1">{% if vote.candidate == "CATS" %}🐱{% elif vote.candidate == "DOGS" %}🐶{%else%}❓{% endif %}</i>
+        <span class="title">A vote for </span><b>'{{vote.candidate}}'</b>
+        <p>was cast at {{vote.time_cast}}</p>
       </li>
-      {{/each}}
+      {% endfor %}
     </ul>
   </div>
   <script>
